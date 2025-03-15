@@ -44,3 +44,5 @@ export RK_WIFIBT_TTY=ttyS4
 ##########################################################
 # <dev>:<mount point>:<fs type>:<mount flags>:<source dir>:<image size(M|K|auto)>:[options]
 export RK_EXTRA_PARTITIONS="oem:/oem:ext2:defaults:oem_empty:auto:resize@userdata:/userdata:ext2:defaults:userdata_empty:auto:resize"
+
+export RK_LOADER_NAME=*_loader_uart2_v*.bin
