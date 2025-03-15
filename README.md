@@ -127,8 +127,8 @@ To customize the kernel, run the following command：
 cd kernel
 make ARCH=arm64 rk3308_linux_defconfig
 make ARCH=arm64 menuconfig
-make ARCH=arm savedefconfig
-cp .config arch/arm/configs/rk3308_linux_defconfig
+make ARCH=arm64 savedefconfig
+cp .config arch/arm64/configs/rk3308_linux_defconfig
 ```
 
 ## Use development board
