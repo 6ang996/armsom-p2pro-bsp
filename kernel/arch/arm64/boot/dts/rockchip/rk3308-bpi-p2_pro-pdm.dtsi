@@ -1,0 +1,110 @@
+/*
+ * Copyright (c) 2018 Fuzhou Rockchip Electronics Co., Ltd
+ *
+ * SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+ */
+
+/ {
+	//model = "rockchip digital-pdm mic board";
+	//compatible = "rockchip,dmic-pdm", "rockchip,rk3308";
+
+	//Combo DAI
+	pdm_i2s_dais: pdm-i2s-dais {
+		compatible = "rockchip,rk3308-multi-dais", "rockchip,multi-dais";
+		dais = <&pdm_8ch>, <&i2s_8ch_2>;	//Sub DAI, used to form a Combo DAI
+		capture,channel-mapping = <4 2>;	//pdm 4ch + i2s 2ch --> total 6ch capture.
+		playback,channel-mapping = <0 2>;	//pdm 0ch + i2s 2ch --> total 2ch playback.
+	};
+
+
+	//not use
+	pdm-mic-array {
+		status = "disabled";
+		compatible = "simple-audio-card";
+		simple-audio-card,name = "rockchip,pdm-mic-array";
+		simple-audio-card,cpu {
+			sound-dai = <&pdm_8ch>;
+		};
+		simple-audio-card,codec {
+			sound-dai = <&dummy_codec>;
+		};
+	};
+
+	//Multi Codecs Machine Dirver, for one DAI to multiple CODECs or where a Combo DAI to multiple CODECs
+	vad-sound {
+		status = "okay";
+		compatible = "rockchip,multicodecs-card";
+		rockchip,card-name = "rockchip,rk3308-vad";
+		rockchip,cpu = <&pdm_i2s_dais>;	//set the DAI device, pdm_i2s_dais to be used simultaneously for both acodec and VAD.
+		rockchip,codec = <&acodec>, <&vad>;	//bind audio codecs
+	};
+};
+
+//acodec already bind to vad
+&acodec_sound {
+	status = "disabled";
+};
+
+//I2S0_2CH, not use
+&i2s_2ch_0 {
+	status = "disabled";
+	#sound-dai-cells = <0>;
+};
+
+//PDM 8CH, for PDM mic array
+&pdm_8ch {
+	status = "okay";
+	#sound-dai-cells = <0>;
+	rockchip,no-dmaengine;
+	pinctrl-names = "default";
+	pinctrl-0 = <&pdm_m2_clk
+				&pdm_m2_sdi0
+				&pdm_m2_sdi1
+				&pdm_m2_sdi2
+				&pdm_m2_sdi3>;
+};
+
+//VAD use PDM mic array as source
+&vad {
+	status = "okay";
+	rockchip,audio-src = <&pdm_8ch>;	//use PDM_8CH as audio source
+	rockchip,buffer-time-ms = <200>;
+	rockchip,det-channel = <0>;	//the channel 0 is used for detection
+	rockchip,mode = <1>;	//1: begin to store the data after vad is enabled.
+	#sound-dai-cells = <0>;
+};
+
+//Combo DAI
+&pdm_i2s_dais {
+	status = "okay";
+	#sound-dai-cells = <0>;
+};
+
+//acodec internally connected to the i2s_8ch_2
+&i2s_8ch_2 {
+	status = "okay";
+	rockchip,no-dmaengine;
+	#sound-dai-cells = <0>;
+};
+
+//Internal Audio Codec
+&acodec {
+	//rockchip,adc-grps-route = <0 1 2 3>;	//mapping route of acodec sdo to I2S sdi, used for change MIC seq num
+	rockchip,loopback-grp = <0>;	//ADC group which is the loopback used
+	//rockchip,micbias1;	//internal micbias1 supply which are from codec.
+	//rockchip,micbias2;
+	rockchip,en-always-grps = <0>;	//This property will keep the needed ADCs enabled always after enabling once
+};
+
+//for ws2812 led
+&spi0 {
+	pinctrl-names = "default", "high_speed";
+	pinctrl-0 = <&spi0_mosi>;	//only use mosi PIN
+	pinctrl-1 = <&spi0_mosi_hs>;
+	status = "okay";
+
+	spi_dev@0 {
+		compatible = "rockchip,spidev";
+		reg = <0>;
+	};
+};
