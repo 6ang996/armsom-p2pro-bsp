@@ -23,7 +23,7 @@ index a2eb529..2720f07 100644
 +    char *alsa_gain_level = getenv("ALSA_LIB_ADD_GAIN");
 +    if(alsa_gain_level) {
 +        int level = atoi(alsa_gain_level);
-+        //printf("gain level:%d\n",level);
++        printf("gain level:%d\n",level);
 +        for(i = 0; i < length; i ++ ) {
 +            int curChannel = i % channels;
 +            if(curChannel < channels - 2 ) {//audio loopback no need to add gain
