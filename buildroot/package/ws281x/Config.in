@@ -1,0 +1,2 @@
+config BR2_PACKAGE_WS281X
+	bool "WS281X"
