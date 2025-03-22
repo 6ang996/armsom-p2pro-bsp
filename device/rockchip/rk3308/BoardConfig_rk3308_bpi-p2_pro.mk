@@ -28,7 +28,7 @@ export RK_ROOTFS_TYPE=ext4
 export RK_DEBIAN_VERSION=bullseye
 MIC_NUM=6
 #misc image
-export RK_MISC=wipe_all-misc.img
+export RK_MISC=blank-misc.img
 # Define WiFi BT chip
 # # Compatible with Realtek and AP6XXX WiFi : RK_WIFIBT_CHIP=ALL_AP
 # # Compatible with Realtek and CYWXXX WiFi : RK_WIFIBT_CHIP=ALL_CY
@@ -43,6 +43,6 @@ export RK_WIFIBT_TTY=ttyS4
 # export RK_UPDATE_SDCARD_ENABLE_FOR_AB=true
 ##########################################################
 # <dev>:<mount point>:<fs type>:<mount flags>:<source dir>:<image size(M|K|auto)>:[options]
-export RK_EXTRA_PARTITIONS="oem:/oem:ext2:defaults:oem_empty:auto:resize@userdata:/userdata:ext2:defaults:userdata_empty:auto:resize"
+export RK_EXTRA_PARTITIONS="oem:/oem:ext2:defaults:oem_empty:auto:resize@userdata:/userdata:ext2:defaults:userdata_normal/:auto:resize"
 
 export RK_LOADER_NAME=*_loader_uart2_v*.bin
