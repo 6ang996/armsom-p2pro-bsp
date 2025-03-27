@@ -2,11 +2,11 @@
 
 case "$1" in
 	start|"")
-		while true
-		do
-			list-iodomain.sh
-			sleep $(( 60 * 2 ))
-		done &
+#		while true
+#		do
+#			list-iodomain.sh
+#			sleep $(( 60 * 2 ))
+#		done &
 		;;
 	restart|reload|force-reload)
 		echo "Error: argument '$1' not supported" >&2
