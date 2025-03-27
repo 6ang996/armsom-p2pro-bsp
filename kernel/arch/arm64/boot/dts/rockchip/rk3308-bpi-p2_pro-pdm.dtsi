@@ -90,10 +90,10 @@
 //Internal Audio Codec
 &acodec {
 	//rockchip,adc-grps-route = <0 1 2 3>;	//mapping route of acodec sdo to I2S sdi, used for change MIC seq num
-	rockchip,loopback-grp = <0>;	//ADC group which is the loopback used
+	//rockchip,loopback-grp = <0>;	//ADC group which is the loopback used
 	//rockchip,micbias1;	//internal micbias1 supply which are from codec.
 	//rockchip,micbias2;
-	rockchip,en-always-grps = <0>;	//This property will keep the needed ADCs enabled always after enabling once
+	//rockchip,en-always-grps = <0>;	//This property will keep the needed ADCs enabled always after enabling once
 };
 
 //for ws2812 led
