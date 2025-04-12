@@ -38,6 +38,20 @@
 		rockchip,cpu = <&pdm_i2s_dais>;	//set the DAI device, pdm_i2s_dais to be used simultaneously for both acodec and VAD.
 		rockchip,codec = <&acodec>, <&vad>;	//bind audio codecs
 	};
+
+	adc-keys {
+		compatible = "adc-keys";
+		io-channels = <&saradc 1>;
+		io-channel-names = "buttons";
+		poll-interval = <100>;
+		keyup-threshold-microvolt = <1800000>;
+
+		vol-up-key {
+			linux,code = <KEY_VOLUMEUP>;
+			label = "volume up";
+			press-threshold-microvolt = <18000>;
+		};
+	};
 };
 
 //acodec already bind to vad
