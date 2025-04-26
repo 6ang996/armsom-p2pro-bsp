@@ -110,6 +110,10 @@ For example, the command to generate debian is as follows:
 ```
 export RK_ROOTFS_SYSTEM=debian
 ./build.sh
+
+#debian build error on 22.04.4, lb config: unrecognized option '--debootstrap-options'
+sudo dpkg -i ubuntu-build-service/packages/live-build_20210902_all.deb
+
 ```
 
 * module compilation
