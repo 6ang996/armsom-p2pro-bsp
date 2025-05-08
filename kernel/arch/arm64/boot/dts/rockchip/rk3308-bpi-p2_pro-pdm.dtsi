@@ -123,3 +123,8 @@
 		reg = <0>;
 	};
 };
+
+// for led mcu
+&i2c1 {
+	status = "okay";
+};
