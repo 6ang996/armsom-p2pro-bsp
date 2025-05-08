@@ -128,3 +128,8 @@
 &i2c1 {
 	status = "okay";
 };
+
+//fix dma Bad Desc
+&dmac1 {
+	//arm,pl330-mcbufsz-bytes = <2048>;
+};
