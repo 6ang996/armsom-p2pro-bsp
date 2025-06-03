@@ -4,6 +4,8 @@
  * SPDX-License-Identifier: (GPL-2.0+ OR MIT)
  */
 
+#define USE_MCU_MIC_LED 1
+
 / {
 	//model = "rockchip digital-pdm mic board";
 	//compatible = "rockchip,dmic-pdm", "rockchip,rk3308";
@@ -51,6 +53,20 @@
 			label = "volume up";
 			press-threshold-microvolt = <18000>;
 		};
+	};
+
+	//for mic mcu led
+	gpio-leds {
+		compatible = "gpio-leds";
+		status = "okay";
+
+#ifdef USE_MCU_MIC_LED
+		mic-led {
+			label = "led:mic";
+			gpios = <&gpio2 RK_PA1 GPIO_ACTIVE_HIGH>;
+			default-state = "on";
+		};
+#endif
 	};
 };
 
@@ -112,6 +128,7 @@
 };
 
 //for ws2812 led
+#ifndef USE_MCU_MIC_LED
 &spi0 {
 	pinctrl-names = "default", "high_speed";
 	pinctrl-0 = <&spi0_mosi>;	//only use mosi PIN
@@ -123,6 +140,7 @@
 		reg = <0>;
 	};
 };
+#endif
 
 // for led mcu
 &i2c1 {
